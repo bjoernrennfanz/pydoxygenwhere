@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Downloaded artifacts
+doxygenwhere/doxysearch.cgi.exe
+doxygenwhere/doxygen.exe
+doxygenwhere/libclang.dll
+doxygenwhere/doxyindexer.exe
+doxygenwhere/doxygen.zip
