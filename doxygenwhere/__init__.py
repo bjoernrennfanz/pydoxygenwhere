@@ -11,7 +11,7 @@ import shutil
 import subprocess
 from zipfile import ZipFile
 
-__version__ = '1.0'
+__version__ = '1.1'
 __author__ = 'Björn Rennfanz'
 __license__ = 'MIT'
 
@@ -97,21 +97,21 @@ def get_latest():
     Get the information for the latest installed version of doxygen.
     Returns None if no installations could be found.
     """
-    return find_first(latest=True)
+    return find_first(download=True, latest=True)
 
 def get_latest_path():
     """
     Get the file path to the latest installed version of doxygen.
     Returns None if no installations could be found.
     """
-    return find_first(latest=True, prop='installationPath')
+    return find_first(download=True, latest=True, prop='installationPath')
 
 def get_latest_version():
     """
     Get the version string of the latest installed version of doxygen.
     Returns None if no installations could be found.
     """
-    return find_first(latest=True, prop='installationVersion')
+    return find_first(download=True, latest=True, prop='installationVersion')
 
 def get_doxygen_path():
     """
