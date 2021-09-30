@@ -11,11 +11,11 @@ import shutil
 import subprocess
 from zipfile import ZipFile
 
-__version__ = '1.4'
+__version__ = '1.4.1'
 __author__ = 'Björn Rennfanz'
 __license__ = 'MIT'
 
-LATEST_RELEASE_URL = 'http://doxygen.nl/files/doxygen-1.9.2.windows.bin.zip'
+LATEST_RELEASE_URL = 'https://www.doxygen.nl/files/doxygen-1.9.2.windows.bin.zip'
 DOWNLOAD_PATH = os.path.join(os.path.dirname(__file__), 'doxygen.exe')
 INSTALL_X64_PATH = None
 INSTALL_X86_PATH = None
@@ -145,8 +145,10 @@ def _download_doxygen_portable():
     print('Downloading from', _get_latest_release_url())
     download_zip_path = os.path.join(os.path.dirname(DOWNLOAD_PATH), 'doxygen.zip')
     try:
+        import ssl
         from urllib.request import urlopen
-        with urlopen(_get_latest_release_url()) as response, open(download_zip_path, 'wb') as outfile:
+        no_verify_context = ssl.SSLContext()
+        with urlopen(_get_latest_release_url(), context=no_verify_context) as response, open(download_zip_path, 'wb') as outfile:
             shutil.copyfileobj(response, outfile)
     except ImportError:
         # Python 2

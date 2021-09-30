@@ -134,3 +134,9 @@ doxygenwhere/doxygen.exe
 doxygenwhere/libclang.dll
 doxygenwhere/doxyindexer.exe
 doxygenwhere/doxygen.zip
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
