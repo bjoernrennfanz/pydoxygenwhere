@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 r"""
 Python interface to locate doxygen installation
 
@@ -11,12 +12,14 @@ import shutil
 import subprocess
 from zipfile import ZipFile
 
-__version__ = '1.4.1'
+__version__ = '1.5.0'
 __author__ = 'Björn Rennfanz'
 __license__ = 'MIT'
 
+LATEST_EMBED_PACKAGE_PATH = os.path.join(os.path.dirname(__file__), 'data', 'doxygen-1.9.2.windows.bin.zip')
 LATEST_RELEASE_URL = 'https://www.doxygen.nl/files/doxygen-1.9.2.windows.bin.zip'
 DOWNLOAD_PATH = os.path.join(os.path.dirname(__file__), 'doxygen.exe')
+
 INSTALL_X64_PATH = None
 INSTALL_X86_PATH = None
 
@@ -28,6 +31,7 @@ if 'ProgramFiles' in os.environ:
 
 alternate_path = None
 download_mirror_url = None
+
 
 def find(download=False, latest=False, prop=None, version=None):
     """
@@ -84,6 +88,7 @@ def find(download=False, latest=False, prop=None, version=None):
 
     return results
 
+
 def find_first(**kwargs):
     """
     Search doxygen and return the first result, or None if there are no results.
@@ -92,12 +97,14 @@ def find_first(**kwargs):
     """
     return next(iter(find(**kwargs)), None)
 
+
 def get_latest():
     """
     Get the information for the latest installed version of doxygen.
     Returns None if no installations could be found.
     """
     return find_first(download=True, latest=True)
+
 
 def get_latest_path():
     """
@@ -106,12 +113,14 @@ def get_latest_path():
     """
     return find_first(download=True, latest=True, prop='installationPath')
 
+
 def get_latest_version():
     """
     Get the version string of the latest installed version of doxygen.
     Returns None if no installations could be found.
     """
     return find_first(download=True, latest=True, prop='installationVersion')
+
 
 def get_doxygen_path():
     """
@@ -122,6 +131,7 @@ def get_doxygen_path():
     """
     return find_first(download=True, latest=True, prop='binaryPath')
 
+
 def set_doxygen_path(path):
     """
     Set the path to doxygen.exe.
@@ -129,6 +139,7 @@ def set_doxygen_path(path):
     """
     global alternate_path
     alternate_path = path
+
 
 def set_download_mirror(url):
     """
@@ -138,25 +149,39 @@ def set_download_mirror(url):
     global download_mirror_url
     download_mirror_url = url
 
+
 def _download_doxygen_portable():
     """
     Download doxygen portable to DOWNLOAD_PATH.
     """
+    import ssl
+
     print('Downloading from', _get_latest_release_url())
     download_zip_path = os.path.join(os.path.dirname(DOWNLOAD_PATH), 'doxygen.zip')
     try:
-        import ssl
+        from urllib.error import URLError
         from urllib.request import urlopen
-        no_verify_context = ssl.SSLContext()
-        with urlopen(_get_latest_release_url(), context=no_verify_context) as response, open(download_zip_path, 'wb') as outfile:
-            shutil.copyfileobj(response, outfile)
+
+        try:
+            no_verify_context = ssl.SSLContext()
+            with urlopen(_get_latest_release_url(), context=no_verify_context) as response, open(download_zip_path, 'wb') as outfile:
+                shutil.copyfileobj(response, outfile)
+        except URLError:
+            shutil.copyfile(LATEST_EMBED_PACKAGE_PATH, download_zip_path)
+
     except ImportError:
         # Python 2
         import urllib
-        urllib.urlretrieve(_get_latest_release_url(), download_zip_path)
+
+        try:
+            no_verify_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+            urllib.urlretrieve(_get_latest_release_url(), download_zip_path, context=no_verify_context)
+        except IOError:
+            shutil.copyfile(LATEST_EMBED_PACKAGE_PATH, download_zip_path)
 
     with ZipFile(download_zip_path, 'r') as zipFile:
         zipFile.extractall(path=os.path.dirname(download_zip_path))
+
 
 def _get_latest_release_url():
     """

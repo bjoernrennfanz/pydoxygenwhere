@@ -11,10 +11,11 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/bjoernrennfanz/pydoxygenwhere',
-    author='Björn Rennfanz',
+    author=doxygenwhere.__author__,
     author_email='bjoern@fam-rennfanz.de',
-    license='MIT',
+    license=doxygenwhere.__license__,
     packages=setuptools.find_packages(),
+    package_data={"doxygenwhere": ["data/doxygen-1.9.2.windows.bin.zip"]},
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Operating System :: Microsoft :: Windows',
