@@ -15,7 +15,7 @@ setuptools.setup(
     author_email='bjoern@fam-rennfanz.de',
     license=doxygenwhere.__license__,
     packages=setuptools.find_packages(),
-    package_data={"doxygenwhere": ["data/doxygen-1.9.2.windows.bin.zip"]},
+    package_data={"doxygenwhere": ["data/doxygen-1.9.5.windows.x64.bin.zip"]},
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Operating System :: Microsoft :: Windows',

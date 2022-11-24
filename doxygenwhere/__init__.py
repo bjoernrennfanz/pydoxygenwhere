@@ -12,12 +12,12 @@ import shutil
 import subprocess
 from zipfile import ZipFile
 
-__version__ = '1.5.0'
+__version__ = '1.6.0'
 __author__ = 'Björn Rennfanz'
 __license__ = 'MIT'
 
-LATEST_EMBED_PACKAGE_PATH = os.path.join(os.path.dirname(__file__), 'data', 'doxygen-1.9.2.windows.bin.zip')
-LATEST_RELEASE_URL = 'https://www.doxygen.nl/files/doxygen-1.9.2.windows.bin.zip'
+LATEST_EMBED_PACKAGE_PATH = os.path.join(os.path.dirname(__file__), 'data', 'doxygen-1.9.5.windows.x64.bin.zip')
+LATEST_RELEASE_URL = 'https://www.doxygen.nl/files/doxygen-1.9.5.windows.x64.bin.zip'
 DOWNLOAD_PATH = os.path.join(os.path.dirname(__file__), 'doxygen.exe')
 
 INSTALL_X64_PATH = None
